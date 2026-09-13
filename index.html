@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cronograma Grito de Independencia 2026 · Toluca</title>
+<style>
+:root{
+  --bg: #14171c;
+  --bg-panel: #1b1f26;
+  --paper: #f5f1e8;
+  --ink: #21242b;
+  --muted: #8b93a1;
+  --hairline: rgba(245,241,232,0.12);
+
+  --c-roa: #c17a3d;
+  --c-roa-soft: rgba(193,122,61,0.16);
+  --c-gob: #2f7d4f;
+  --c-gob-soft: rgba(47,125,79,0.16);
+  --c-acs: #a83246;
+  --c-acs-soft: rgba(168,50,70,0.16);
+  --c-mix: #7a5ea8;
+  --c-mix-soft: rgba(122,94,168,0.16);
+  --c-otros: #4d7ea8;
+  --c-otros-soft: rgba(77,126,168,0.16);
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background: var(--bg);
+  color: var(--paper);
+  font-family: 'Georgia', 'Iowan Old Style', serif;
+  -webkit-font-smoothing: antialiased;
+}
+.sans{font-family: 'Helvetica Neue', Arial, sans-serif;}
+
+header.hero{
+  padding: 56px 32px 40px;
+  background:
+    radial-gradient(ellipse at top left, rgba(193,122,61,0.18), transparent 55%),
+    radial-gradient(ellipse at top right, rgba(47,125,79,0.16), transparent 55%),
+    var(--bg);
+  border-bottom: 1px solid var(--hairline);
+}
+.hero-inner{max-width: 980px; margin: 0 auto;}
+.eyebrow{
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 12.5px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  margin: 0 0 14px;
+}
+h1{
+  font-size: clamp(32px, 5vw, 52px);
+  line-height: 1.08;
+  margin: 0 0 14px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+h1 em{ font-style: italic; color: #d99a5f; }
+.subtitle{
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 16px;
+  color: var(--muted);
+  max-width: 640px;
+  line-height: 1.55;
+  margin: 0 0 28px;
+}
+
+.legend{
+  display:flex; flex-wrap: wrap; gap: 10px 18px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 13px;
+}
+.legend-item{ display:flex; align-items:center; gap:8px; color: var(--paper); }
+.dot{ width:10px; height:10px; border-radius:2px; display:inline-block; flex-shrink:0; }
+
+nav.days{
+  position: sticky; top:0; z-index: 20;
+  display:flex; gap: 2px; overflow-x:auto;
+  background: var(--bg);
+  border-bottom: 1px solid var(--hairline);
+  padding: 0 32px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+nav.days::-webkit-scrollbar{ height: 0px; }
+.day-tab{
+  flex: 0 0 auto;
+  padding: 16px 20px 14px;
+  font-size: 13.5px;
+  color: var(--muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: color .15s ease, border-color .15s ease;
+}
+.day-tab .n{ display:block; font-size: 10.5px; letter-spacing:.06em; opacity:.7; margin-bottom:2px;}
+.day-tab.active{ color: var(--paper); border-bottom-color: #d99a5f; }
+.day-tab:hover{ color: var(--paper); }
+
+main{ max-width: 980px; margin: 0 auto; padding: 40px 32px 100px; }
+
+.day-panel{ display:none; }
+.day-panel.active{ display:block; }
+
+.day-heading{
+  display:flex; align-items:baseline; justify-content:space-between; gap:16px;
+  margin-bottom: 30px; flex-wrap:wrap;
+}
+.day-heading h2{
+  font-size: 26px; font-weight:400; margin:0; color:#f5f1e8;
+}
+.day-heading .count{
+  font-family:'Helvetica Neue', Arial, sans-serif; font-size:12px; color:var(--muted);
+}
+
+.timeline{ position:relative; }
+.timeline::before{
+  content:''; position:absolute; left: 108px; top:6px; bottom:6px; width:1px;
+  background: var(--hairline);
+}
+@media (max-width: 640px){
+  .timeline::before{ left: 72px; }
+}
+
+.item{
+  position:relative;
+  display:grid;
+  grid-template-columns: 108px 1fr;
+  gap: 0 22px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--hairline);
+}
+@media (max-width: 640px){
+  .item{ grid-template-columns: 72px 1fr; }
+}
+.item:last-child{ border-bottom:none; }
+
+.time{
+  font-family:'Helvetica Neue', Arial, sans-serif;
+  font-size: 12.5px;
+  color: var(--muted);
+  padding-top: 3px;
+  text-align:right;
+  line-height:1.4;
+}
+.node{
+  position:absolute; left:104px; top:22px; width:9px; height:9px; border-radius:50%;
+  transform: translateX(-50%);
+  border: 2px solid var(--bg);
+}
+@media (max-width: 640px){
+  .node{ left:68px; }
+}
+
+.card{
+  border-left: 3px solid transparent;
+  padding: 2px 0 2px 16px;
+}
+.badge{
+  display:inline-block;
+  font-family:'Helvetica Neue', Arial, sans-serif;
+  font-size: 10.5px;
+  letter-spacing:.04em;
+  padding: 3px 8px;
+  border-radius: 3px;
+  margin-bottom: 7px;
+}
+.activity{
+  font-size: 16.5px;
+  line-height: 1.45;
+  color: var(--paper);
+  margin: 0 0 6px;
+}
+.meta{
+  font-family:'Helvetica Neue', Arial, sans-serif;
+  font-size: 12.5px;
+  color: var(--muted);
+  line-height:1.5;
+}
+.meta b{ color:#c9cdd6; font-weight:600; }
+
+.cat-roa .badge{ background: var(--c-roa-soft); color:#e3a86e; }
+.cat-roa .card{ border-color: var(--c-roa); }
+.cat-roa .node{ background: var(--c-roa); }
+
+.cat-gobierno .badge{ background: var(--c-gob-soft); color:#5fbf88; }
+.cat-gobierno .card{ border-color: var(--c-gob); }
+.cat-gobierno .node{ background: var(--c-gob); }
+
+.cat-acs .badge{ background: var(--c-acs-soft); color:#e07084; }
+.cat-acs .card{ border-color: var(--c-acs); }
+.cat-acs .node{ background: var(--c-acs); }
+
+.cat-mixto .badge{ background: var(--c-mix-soft); color:#b19bd8; }
+.cat-mixto .card{ border-color: var(--c-mix); }
+.cat-mixto .node{ background: var(--c-mix); }
+
+.cat-otros .badge{ background: var(--c-otros-soft); color:#7fb2d8; }
+.cat-otros .card{ border-color: var(--c-otros); }
+.cat-otros .node{ background: var(--c-otros); }
+
+footer{
+  max-width:980px; margin:0 auto; padding: 0 32px 60px;
+  font-family:'Helvetica Neue', Arial, sans-serif; font-size:11.5px; color:var(--muted);
+  border-top:1px solid var(--hairline); padding-top:24px;
+}
+
+@media print{
+  nav.days{ display:none; }
+  .day-panel{ display:block !important; page-break-before: always; }
+  body{ background:#fff; color:#111; }
+  .card, header.hero, .item{ border-color:#ccc; }
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <p class="eyebrow sans">CENTRO HISTÓRICO DE TOLUCA · 216 ANIVERSARIO</p>
+    <h1>Cronograma operativo<br><em>Grito de Independencia</em> 2026</h1>
+    <p class="subtitle">Línea de tiempo consolidada del montaje, producción y desmontaje, del viernes 11 al miércoles 16 de septiembre. Cada actividad está codificada por el equipo responsable.</p>
+    <div class="legend" id="legendBox"></div>
+  </div>
+</header>
+
+<nav class="days" id="dayNavBox"></nav>
+
+<main id="mainBox"></main>
+
+<footer>
+  Generado a partir de "CRONOGRAMA_ROA_GRITO_INDEPENDENCIA_2026.xlsx". Los horarios marcados como rangos se ordenan por su hora de inicio.
+</footer>
+
+<script>
+(function(){
+var TIMELINE_DATA = [{"dia": "Viernes 11 de Septiembre", "hora": "08:30 hrs.", "zona": "Centro Historico Toluca", "responsable": "GRUPO ROA", "staff": "TODO STAFF GRUPO ROA", "actividad": "Llegada de Staff Tecnico y Camiones Grupo ROA", "cat": "roa", "sort_min": 510, "day_idx": 0}, {"dia": "Viernes 11 de Septiembre", "hora": "9:00 hrs.", "zona": "Centro Historico Toluca", "responsable": "GRUPO ROA", "staff": "ESTRUCTURAS GRUPO ROA", "actividad": "Inicio de Montaje de Estructuras Para Torres de Audio y Pantallas dentro del Centro Historico de Toluca", "cat": "roa", "sort_min": 540, "day_idx": 0}, {"dia": "Viernes 11 de Septiembre", "hora": "09:00-09:20 hrs.", "zona": "Centro Historico Toluca", "responsable": "GRUPO ROA", "staff": "TODO STAFF GRUPO ROA", "actividad": "Briefing de seguridad y asignación de cuadrillas (2 técnicos por sub-zona)", "cat": "roa", "sort_min": 540, "day_idx": 0}, {"dia": "Viernes 11 de Septiembre", "hora": "09:00- 09:45 hrs.", "zona": "Zona de Acopio", "responsable": "GRUPO ROA", "staff": "ESTRUCTURAS GRUPO ROA", "actividad": "Descarga, inspección y clasificación de material Truss (verificación de piezas, pines y estado de cada estructura)", "cat": "roa", "sort_min": 540, "day_idx": 0}, {"dia": "Viernes 11 de Septiembre", "hora": "9:00-20:00 hrs.", "zona": "Centro Historico Toluca", "responsable": "GRUPO ROA Cuadrilla A y B", "staff": "ESTRUCTURAS GRUPO ROA", "actividad": "Sembrado de Estructuras De Audio y Video", "cat": "roa", "sort_min": 540, "day_idx": 0}, {"dia": "Viernes 11 de Septiembre", "hora": "9:00-20:00 hrs.", "zona": "Centro Historico Toluca", "responsable": "GRUPO ROA Cuadrilla A y B", "staff": "ESTRUCTURAS GRUPO ROA", "actividad": "Torres de Iluminación", "cat": "roa", "sort_min": 540, "day_idx": 0}, {"dia": "Viernes 11 de Septiembre", "hora": "9:00-20:00 hrs.", "zona": "Centro Historico Toluca", "responsable": "GRUPO ROA Cuadrilla A y B", "staff": "ESTRUCTURAS GRUPO ROA", "actividad": "Ingreso de todo el material o equipo al master", "cat": "roa", "sort_min": 540, "day_idx": 0}, {"dia": "Viernes 11 de Septiembre", "hora": "09:45- 11:15 hrs.", "zona": "Perimetro Norte/Accesos Principales", "responsable": "GRUPO ROA Cuadrilla A y B", "staff": "ESTRUCTURAS GRUPO ROA", "actividad": "Fase 1 — Armado y posicionamiento de 18 estructuras Truss en el perímetro norte y accesos principales.", "cat": "roa", "sort_min": 585, "day_idx": 0}, {"dia": "Viernes 11 de Septiembre", "hora": "11:15-13:00 hrs.", "zona": "Perimetro Sur/Poniente", "responsable": "GRUPO ROA Cuadrilla A y B", "staff": "ESTRUCTURAS GRUPO ROA", "actividad": "Fase 2 — Armado y posicionamiento de 18 estructuras Truss adicionales en el perímetro sur y costado poniente.", "cat": "roa", "sort_min": 675, "day_idx": 0}, {"dia": "Viernes 11 de Septiembre", "hora": "12:00-12:30 hrs.", "zona": "Explanada Central", "responsable": "GRUPO ROA", "staff": "TODO STAFF GRUPO ROA", "actividad": "Break para comida Staff Tecnico", "cat": "roa", "sort_min": 720, "day_idx": 0}, {"dia": "Viernes 11 de Septiembre", "hora": "14:00-16:00 hrs.", "zona": "Explanada Central", "responsable": "GRUPO ROA", "staff": "ESTRUCTURAS GRUPO ROA", "actividad": "Fase 3 — Armado de las 14 estructuras restantes en el área central de la plaza. Monitoreo activo del cielo por riesgo de tormenta eléctrica.", "cat": "roa", "sort_min": 840, "day_idx": 0}, {"dia": "Viernes 11 de Septiembre", "hora": "16.00-16:45 hrs.", "zona": "Centro Historico Toluca", "responsable": "GRUPO ROA Cuadrilla A y B", "staff": "ESTRUCTURAS GRUPO ROA", "actividad": "Verificación de anclajes, contrapesos y niveles; ajuste de estabilidad ante viento. Cuadrillas de inspección cruzada.", "cat": "roa", "sort_min": 960, "day_idx": 0}, {"dia": "Viernes 11 de Septiembre", "hora": "16:45-17:00 hrs.", "zona": "Zona de Acopio", "responsable": "GRUPO ROA Cuadrilla A y B", "staff": "ESTRUCTURAS GRUPO ROA", "actividad": "Cierre de jornada: Resguardo de herramienta y material sobrante, reporte de avance al Director de Operaciones, cobertura de estructuras con lona (previsión de lluvia nocturna).", "cat": "roa", "sort_min": 1005, "day_idx": 0}, {"dia": "Viernes 11 de Septiembre", "hora": "21:00 hrs", "zona": "Explanada Central", "responsable": "GRUPO ROA", "staff": "TODO STAFF GRUPO ROA", "actividad": "Ensayo General", "cat": "roa", "sort_min": 1260, "day_idx": 0}, {"dia": "Sábado 12 de Septiembre", "hora": "8:00 hrs.", "zona": "Centro Historico", "responsable": "GRUPO ROA", "staff": "TODO STAFF GRUPO ROA", "actividad": "Llegada de Staff Tecnico y Camiones ROA al Centro Historico de Toluca", "cat": "roa", "sort_min": 480, "day_idx": 1}, {"dia": "Sábado 12 de Septiembre", "hora": "9:00 hrs.", "zona": "Palacio de Gobierno", "responsable": "GRUPO ROA", "staff": "STAFF TECNICO GRUPO ROA", "actividad": "Entrada a Palacio de Gobierno del Estado de Mexico a Staff Tecnico ROA para montaje", "cat": "roa", "sort_min": 540, "day_idx": 1}, {"dia": "Sábado 12 de Septiembre", "hora": "9:00 hrs.", "zona": "Centro Historico", "responsable": "GRUPO ROA", "staff": "TODO STAFF GRUPO ROA", "actividad": "Inicio de montaje de Equipos (Audio, Pantallas e Iluminacion) en los diferentes puntos dentro de Centro Historico", "cat": "roa", "sort_min": 540, "day_idx": 1}, {"dia": "Sábado 12 de Septiembre", "hora": "9:00 hrs.", "zona": "CDMX", "responsable": "GRUPO ROA", "staff": "ILUMINACION GRUPO ROA", "actividad": "Recogen PU en Ciudad de Mexico para consola en escenario", "cat": "roa", "sort_min": 540, "day_idx": 1}, {"dia": "Sábado 12 de Septiembre", "hora": "09:00 hrs.", "zona": "Explanada Central", "responsable": "GRUPO ROA + AMPASA", "staff": "ROA+AMPASA", "actividad": "Llegada de Escenario movil para orquesta AMPASA", "cat": "roa", "sort_min": 540, "day_idx": 1}, {"dia": "Sábado 12 de Septiembre", "hora": "9:00-9:20 hrs.", "zona": "Punto de Reunion", "responsable": "GRUPO ROA Coordinador de Montaje", "staff": "ILUMINACION GRUPO ROA", "actividad": "Registro de Asistencia, Briefing de seguridad. (Asignación de 3 cuadrillas de 2 técnicos por sector-Iluminacion).", "cat": "roa", "sort_min": 540, "day_idx": 1}, {"dia": "Sábado 12 de Septiembre", "hora": "9:00-20:00 hrs.", "zona": "Centro Historico", "responsable": "GRUPO ROA Cuadrilla Completa", "staff": "STAFF VIDEO GRUPO ROA", "actividad": "Tendido de cableado eléctrico y fibra óptica en todos los puntos", "cat": "roa", "sort_min": 540, "day_idx": 1}, {"dia": "Sábado 12 de Septiembre", "hora": "9:00-20:00 hrs.", "zona": "Centro Historico", "responsable": "GRUPO ROA Cuadrilla Completa", "staff": "STAFF AUDIO Y VIDEO GRUPO ROA", "actividad": "Montaje de audio y video", "cat": "roa", "sort_min": 540, "day_idx": 1}, {"dia": "Sábado 12 de Septiembre", "hora": "9:00-20:00 hrs.", "zona": "Plaza Civica", "responsable": "GRUPO ROA Cuadrilla Completa", "staff": "ILUMINACION GRUPO ROA", "actividad": "Montaje y distribución de lámparas en toda plaza cívica", "cat": "roa", "sort_min": 540, "day_idx": 1}, {"dia": "Sábado 12 de Septiembre", "hora": "9:00-20:00 hrs.", "zona": "Palacio de Gobierno", "responsable": "GRUPO ROA Cuadrilla Completa", "staff": "TODO STAFF GRUPO ROA", "actividad": "Ingreso de periqueras y salas lounge a patio central de palacio", "cat": "roa", "sort_min": 540, "day_idx": 1}, {"dia": "Sábado 12 de Septiembre", "hora": "09:20-09:50 hrs.", "zona": "Zona de Acopio", "responsable": "GRUPO ROA Cuadrilla Completa", "staff": "ILUMINACION GRUPO ROA", "actividad": "Descarga, prueba de encendido individual y clasificación de las 200 luminarias SGM P-2 por sector de destino. Zona de Acopio", "cat": "roa", "sort_min": 560, "day_idx": 1}, {"dia": "Sábado 12 de Septiembre", "hora": "09:50-11:30 hrs.", "zona": "Sector Norte/Acceso", "responsable": "GRUPO ROA Cuadrilla Completa", "staff": "ILUMINACION GRUPO ROA", "actividad": "Fase 1 (paralelo) — Fijación de ≈70 sobre Truss y puntos Fijos del Sector Norte", "cat": "roa", "sort_min": 590, "day_idx": 1}, {"dia": "Sábado 12 de Septiembre", "hora": "09:50-11:30 hrs.", "zona": "Sector Sur /Poniente", "responsable": "GRUPO ROA Cuadrilla B", "staff": "ILUMINACION GRUPO ROA", "actividad": "Fase 1 (paralelo) — Fijación de ≈70 equipos en el sector Sur / costado poniente.", "cat": "roa", "sort_min": 590, "day_idx": 1}, {"dia": "Sábado 12 de Septiembre", "hora": "11:00 hrs.", "zona": "Centro Historico", "responsable": "GRUPO ROA +ACS (Asminda)", "staff": "ROA+ ACS", "actividad": "Llamado de Unidades (Camiones Top Truss (Soporte))", "cat": "mixto", "sort_min": 660, "day_idx": 1}, {"dia": "Sábado 12 de Septiembre", "hora": "11:30-13:00 hrs.", "zona": "Explanada Central", "responsable": "GRUPO ROA Cuadrilla A, B y C", "staff": "ILUMINACION GRUPO ROA", "actividad": "Fase 2 — Fijación de los ≈60 equipos restantes en la explanada central y puntos decorativos. Inicio de cableado eléctrico por sector ya instalado.", "cat": "roa", "sort_min": 690, "day_idx": 1}, {"dia": "Sábado 12 de Septiembre", "hora": "11:59 hrs.", "zona": "Centro Historico", "responsable": "GRUPO ROA +ACS (Asminda)", "staff": "TODO STAFF GRUPO ROA", "actividad": "Inicio/Load in Inicio de Operaciones-Montaje de Soporte", "cat": "mixto", "sort_min": 719, "day_idx": 1}, {"dia": "Sábado 12 de Septiembre", "hora": "12:00-12:30 hrs", "zona": "Explanada Central", "responsable": "GRUPO ROA", "staff": "STAFF TECNICO GRUPO ROA", "actividad": "Break para comida Staff Tecnico", "cat": "roa", "sort_min": 720, "day_idx": 1}, {"dia": "Sábado 12 de Septiembre", "hora": "15:00-16:30 hrs.", "zona": "Centro Historico", "responsable": "GRUPO ROA Cuadrilla Completa", "staff": "ILUMINACION GRUPO ROA", "actividad": "Fase 3 — Conexionado eléctrico y de datos (DMX / red) de los 200 equipos; verificación de direccionamiento por sector.", "cat": "roa", "sort_min": 900, "day_idx": 1}, {"dia": "Sábado 12 de Septiembre", "hora": "16:30-17:15 hrs.", "zona": "Centro Historico", "responsable": "GRUPO ROA Cuadrilla Completa", "staff": "ILUMINACION GRUPO ROA", "actividad": "5 Fase 4 — Enfoque y orientación de luminarias (ángulos, gobos/color si aplica) conforme al diseño de iluminación arquitectónica.", "cat": "roa", "sort_min": 990, "day_idx": 1}, {"dia": "Sábado 12 de Septiembre", "hora": "17:15-17:45 hrs.", "zona": "Centro Historico", "responsable": "GRUPO ROA Coordinador Tecnico", "staff": "ILUMINACION GRUPO ROA", "actividad": "Prueba general de encendido, verificación de continuidad y detección de fallas punto por punto.", "cat": "roa", "sort_min": 1035, "day_idx": 1}, {"dia": "Sábado 12 de Septiembre", "hora": "17:45-18:00 hrs.", "zona": "Punto de Reunion", "responsable": "GRUPO ROA Coordinador de Montaje", "staff": "TODO STAFF GRUPO ROA", "actividad": "Cierre de jornada: reporte final de avance al Ing. Rodolfo Oropeza Argüelles, resguardo de herramienta y entrega de sitio.", "cat": "roa", "sort_min": 1065, "day_idx": 1}, {"dia": "Sábado 12 de Septiembre", "hora": "23:00 hrs.", "zona": "Plaza Civica", "responsable": "ACS (Asminda)", "staff": "ACS", "actividad": "Recibimiento de Support e Inicio de Instalacion del mismo", "cat": "acs", "sort_min": 1380, "day_idx": 1}, {"dia": "Domingo 13 de Septiembre", "hora": "3:00 hrs.", "zona": "Centro Historico", "responsable": "GRUPO ROA", "staff": "STAFF GRUPO ROA UBALDO Y JOSE LUIS", "actividad": "Llegada de Plantas de Energia Electrica Grupo ROA para montaje de Support", "cat": "roa", "sort_min": 180, "day_idx": 2}, {"dia": "Domingo 13 de Septiembre", "hora": "3:00 hrs.", "zona": "Centro Historico", "responsable": "GRUPO ROA", "staff": "STAFF GRUPO ROA UBALDO Y JOSE LUIS", "actividad": "Llamado Planta de Luz para motores de soporte ROA (Energia Generadores)", "cat": "roa", "sort_min": 180, "day_idx": 2}, {"dia": "Domingo 13 de Septiembre", "hora": "7:00 hrs.", "zona": "Centro Historico", "responsable": "GRUPO ROA", "staff": "ILUMINACION GRUPO ROA", "actividad": "Inicio de Labores para Checar Posiciones del Rigging para Iluminacion del Escenario", "cat": "roa", "sort_min": 420, "day_idx": 2}, {"dia": "Domingo 13 de Septiembre", "hora": "7:00 hrs.", "zona": "Centro Historico", "responsable": "GRUPO ROA +YERYE", "staff": "VIDEO GRUPO ROA", "actividad": "Llegada de pantalla central para escenario", "cat": "roa", "sort_min": 420, "day_idx": 2}, {"dia": "Domingo 13 de Septiembre", "hora": "7:00 hrs.", "zona": "Centro Historico", "responsable": "GRUPO ROA +ACS (Asminda)", "staff": "ACS", "actividad": "Rigging", "cat": "mixto", "sort_min": 420, "day_idx": 2}, {"dia": "Domingo 13 de Septiembre", "hora": "8:00 hrs.", "zona": "Centro Historico", "responsable": "GRUPO ROA", "staff": "STAFF TECNICO GRUPO ROA", "actividad": "Llegada de Staff Tecnico y Camiones Grupo ROA a Centro Historico", "cat": "roa", "sort_min": 480, "day_idx": 2}, {"dia": "Domingo 13 de Septiembre", "hora": "8:00 hrs.", "zona": "Centro Historico", "responsable": "GOBIERNO", "staff": "", "actividad": "Suministro de Agua/ Pipas de Agua (Llenado de bidones de anclaje)", "cat": "gobierno", "sort_min": 480, "day_idx": 2}, {"dia": "Domingo 13 de Septiembre", "hora": "9:00 hrs.", "zona": "Palacio de Gobierno", "responsable": "GRUPO ROA", "staff": "STAFF TECNICO GRUPO ROA", "actividad": "Entrada a Palacio de Gobierno del Estado de Mexico a Staff Tecnico ROA para Montaje", "cat": "roa", "sort_min": 540, "day_idx": 2}, {"dia": "Domingo 13 de Septiembre", "hora": "9:00-20:00 hrs.", "zona": "Centro Historico", "responsable": "GRUPO ROA Cuadrilla Completa", "staff": "TODO STAFF GRUPO ROA", "actividad": "Ground Support de Audio video e iluminación para escenario artístico", "cat": "roa", "sort_min": 540, "day_idx": 2}, {"dia": "Domingo 13 de Septiembre", "hora": "10:00 hrs.", "zona": "Palacio de Gobierno", "responsable": "GRUPO ROA", "staff": "STAFF GRUPO ROA", "actividad": "Instalacion de Puestos de Feria y Puestos de Comida en Patio Central", "cat": "roa", "sort_min": 600, "day_idx": 2}, {"dia": "Domingo 13 de Septiembre", "hora": "11:00 hrs.", "zona": "Centro Historico", "responsable": "ACS (Asminda)", "staff": "ACS", "actividad": "Load In Escenario Escenario y Areas de Trabajo TOP TRUSS", "cat": "acs", "sort_min": 660, "day_idx": 2}, {"dia": "Domingo 13 de Septiembre", "hora": "12:00-12:30 hrs.", "zona": "Explanada Central", "responsable": "GRUPO ROA", "staff": "STAFF TECNICO GRUPO ROA", "actividad": "BREAK PARA COMIDA STAFF TECNICO ROA", "cat": "roa", "sort_min": 720, "day_idx": 2}, {"dia": "Domingo 13 de Septiembre", "hora": "13:00 hrs.", "zona": "Explanada Central", "responsable": "GRUPO ROA +HPOWER Julio Torres", "staff": "Hpower Julio Torres", "actividad": "Llegada de Generadores HPOWER para escenario artsitico", "cat": "roa", "sort_min": 780, "day_idx": 2}, {"dia": "Domingo 13 de Septiembre", "hora": "13:00 hrs.", "zona": "Explanada Central", "responsable": "GRUPO ROA +SHOWCO", "staff": "Showco", "actividad": "Llamado de personal de SHOWCO para instalación de pantallas laterales en escenario", "cat": "roa", "sort_min": 780, "day_idx": 2}, {"dia": "Domingo 13 de Septiembre", "hora": "14:00 hrs.", "zona": "Centro Historico", "responsable": "GRUPO ROA Tecnicos de Audio y Video", "staff": "TODO STAFF GRUPO ROA", "actividad": "Load In Audio y Video (Llamado de Tecnicos de Grupo ROA)", "cat": "roa", "sort_min": 840, "day_idx": 2}, {"dia": "Domingo 13 de Septiembre", "hora": "15:00 hrs", "zona": "Centro Historico", "responsable": "GRUPO ROA", "staff": "TODO STAFF GRUPO ROA", "actividad": "Inicio de montaje de Iluminacion, Audio y Video en el Escenario", "cat": "roa", "sort_min": 900, "day_idx": 2}, {"dia": "Domingo 13 de Septiembre", "hora": "15:00 hrs.", "zona": "Centro Historico", "responsable": "GRUPO ROA Tecnicos de Iluminacion", "staff": "ILUMINACION GRUPO ROA", "actividad": "Load In Iluminacion Diseño de Iluminacion (Llamado de Tecnicos de Grupo ROA)", "cat": "roa", "sort_min": 900, "day_idx": 2}, {"dia": "Domingo 13 de Septiembre", "hora": "21:00 hrs.", "zona": "Centro Historico", "responsable": "GRUPO ROA +ACS (Asminda)", "staff": "ROA+ACS", "actividad": "Load In Sobretarimas (Llamado de Top Truss)", "cat": "mixto", "sort_min": 1260, "day_idx": 2}, {"dia": "Domingo 13 de Septiembre", "hora": "23:00 hrs.", "zona": "Centro Historico", "responsable": "GRUPO ROA", "staff": "", "actividad": "Cierre de jornada", "cat": "roa", "sort_min": 1380, "day_idx": 2}, {"dia": "Lunes 14 de Septiembre", "hora": "8:00 hrs.", "zona": "Centro Historico", "responsable": "GRUPO ROA", "staff": "TODO STAFF GRUPO ROA", "actividad": "Llegada de Staff Tecnico y Camiones Grupo ROA", "cat": "roa", "sort_min": 480, "day_idx": 3}, {"dia": "Lunes 14 de Septiembre", "hora": "9:00 hrs", "zona": "Centro Historico", "responsable": "GRUPO ROA +ACS (Asminda)", "staff": "ROA+ACS", "actividad": "Inicio de Montaje del Escenario para Maria Jose", "cat": "mixto", "sort_min": 540, "day_idx": 3}, {"dia": "Lunes 14 de Septiembre", "hora": "9:30 hrs.", "zona": "Centro Historico", "responsable": "GRUPO ROA +ACS (Asminda)", "staff": "ROA+ACS", "actividad": "Llamado Staff Grupo ROA (Llamado de 3 Stage Hands y 2 ayudantes de luces por parte de Grupo ROA para montaje de Maria Jose)", "cat": "mixto", "sort_min": 570, "day_idx": 3}, {"dia": "Lunes 14 de Septiembre", "hora": "9:30 hrs.", "zona": "Centro Historico", "responsable": "GRUPO ROA", "staff": "TODO STAFF GRUPO ROA", "actividad": "Llamado Tecnico Grupo ROA (Tecnicos de Audio y Luces ROA; Generadores en funcionamiento)", "cat": "roa", "sort_min": 570, "day_idx": 3}, {"dia": "Lunes 14 de Septiembre", "hora": "10:00 hrs.", "zona": "Centro Historico", "responsable": "ACS (Asminda)", "staff": "ACS", "actividad": "Load In Maria Jose (Complementos de Audio y Luces Maria Jose/Llamado de Staff de Avanzada de Maria Jose", "cat": "acs", "sort_min": 600, "day_idx": 3}, {"dia": "Lunes 14 de Septiembre", "hora": "12:00-12:30 hrs.", "zona": "Explanada Central", "responsable": "GRUPO ROA", "staff": "STAFF TECNICO GRUPO ROA", "actividad": "Break para Comida (staff grito)", "cat": "roa", "sort_min": 720, "day_idx": 3}, {"dia": "Lunes 14 de Septiembre", "hora": "14:00 hrs.", "zona": "Explanada Central", "responsable": "GRUPO ROA +ACS (Asminda)", "staff": "ROA+ACS", "actividad": "Fin Montaje de Maria Jose/Comida TODOS", "cat": "mixto", "sort_min": 840, "day_idx": 3}, {"dia": "Lunes 14 de Septiembre", "hora": "16:00 hrs.", "zona": "Explanada Central", "responsable": "GRUPO ROA", "staff": "TODO STAFF GRUPO ROA", "actividad": "Llamado General Grupo ROA (Tecnicos de Audio, Luces y Video ROA, Generadores en funcionamiento y stage hands)", "cat": "roa", "sort_min": 960, "day_idx": 3}, {"dia": "Lunes 14 de Septiembre", "hora": "16:00 hrs.", "zona": "Explanada Central", "responsable": "ACS (Asminda)", "staff": "ACS", "actividad": "Load In German Montero/ Llamado de Staff German Montero", "cat": "acs", "sort_min": 960, "day_idx": 3}, {"dia": "Lunes 14 de Septiembre", "hora": "19:00 hrs.", "zona": "Explanada Central", "responsable": "ACS (Asminda)", "staff": "ACS", "actividad": "Sound Check German Montero", "cat": "acs", "sort_min": 1140, "day_idx": 3}, {"dia": "Lunes 14 de Septiembre", "hora": "20:00 hrs.", "zona": "Explanada Central", "responsable": "ACS (Asminda)", "staff": "ACS", "actividad": "Fin Montaje de German Montero", "cat": "acs", "sort_min": 1200, "day_idx": 3}, {"dia": "Lunes 14 de Septiembre", "hora": "20:00 hrs.", "zona": "Explanada Central", "responsable": "GRUPO ROA", "staff": "TODO STAFF GRUPO ROA", "actividad": "Ensayo General", "cat": "roa", "sort_min": 1200, "day_idx": 3}, {"dia": "Lunes 14 de Septiembre", "hora": "21:00 hrs.", "zona": "Explanada Central", "responsable": "GRUPO ROA", "staff": "", "actividad": "Cierre de Jornada Fin del dia", "cat": "roa", "sort_min": 1260, "day_idx": 3}, {"dia": "Martes 15 de Septiembre", "hora": "8:00 hrs.", "zona": "Centro Historico", "responsable": "GRUPO ROA", "staff": "TODO STAFF GRUPO ROA", "actividad": "Llegada de Staff Tecnico ROA", "cat": "roa", "sort_min": 480, "day_idx": 4}, {"dia": "Martes 15 de Septiembre", "hora": "8:30 hrs", "zona": "Centro Historico", "responsable": "GRUPO ROA", "staff": "TODO STAFF GRUPO ROA", "actividad": "Inicio de Labores en General", "cat": "roa", "sort_min": 510, "day_idx": 4}, {"dia": "Martes 15 de Septiembre", "hora": "9:00 hrs.", "zona": "Centro Historico", "responsable": "GRUPO ROA", "staff": "TODO STAFF GRUPO ROA", "actividad": "Call Time Grupo ROA Técnicos Audio, Luces, Video de ROA, Generadores en funcionamiento y Llamado de 3 Stage Hands", "cat": "roa", "sort_min": 540, "day_idx": 4}, {"dia": "Martes 15 de Septiembre", "hora": "9:00 hrs.", "zona": "Centro Historico", "responsable": "ACS (Asminda)", "staff": "ACS", "actividad": "Load In Backline de María José (llegada de staff)", "cat": "acs", "sort_min": 540, "day_idx": 4}, {"dia": "Martes 15 de Septiembre", "hora": "10:00 hrs.", "zona": "Av. Miguel Hidalgo hasta Alameda", "responsable": "GOBIERNO", "staff": "GOBIERNO", "actividad": "Desfile de Bandas Juveniles de Marcha", "cat": "gobierno", "sort_min": 600, "day_idx": 4}, {"dia": "Martes 15 de Septiembre", "hora": "12:00 hrs.", "zona": "Centro Historico", "responsable": "ACS (Asminda)", "staff": "ACS", "actividad": "Sound Check María José", "cat": "acs", "sort_min": 720, "day_idx": 4}, {"dia": "Martes 15 de Septiembre", "hora": "12:00 hrs.", "zona": "Andador Constitucion", "responsable": "GOBIERNO", "staff": "GOBIERNO", "actividad": "Participacion Escuela de Bellas Artes Capulhuac", "cat": "gobierno", "sort_min": 720, "day_idx": 4}, {"dia": "Martes 15 de Septiembre", "hora": "13:00 hrs.", "zona": "Centro Historico", "responsable": "ACS (Asminda)", "staff": "ACS", "actividad": "Load In Consolas, backline de Aarón y su grupo Ilusión (Llegada de Staff)", "cat": "acs", "sort_min": 780, "day_idx": 4}, {"dia": "Martes 15 de Septiembre", "hora": "13:00-13:30 hrs.", "zona": "Centro Historico", "responsable": "OSEM", "staff": "OSEM", "actividad": "Llegada y descarga camión mudanza OSEM y Metamorfeame", "cat": "otros", "sort_min": 780, "day_idx": 4}, {"dia": "Martes 15 de Septiembre", "hora": "13:00 hrs.", "zona": "Concha Acustica", "responsable": "GOBIERNO", "staff": "GOBIERNO", "actividad": "Participacion Escuela de Bellas Artes Tenango", "cat": "gobierno", "sort_min": 780, "day_idx": 4}, {"dia": "Martes 15 de Septiembre", "hora": "13:00 hrs.", "zona": "Gonzalez Arratia", "responsable": "GOBIERNO", "staff": "GOBIERNO", "actividad": "Participacion de la Direccion General de Inclusion y Fortalecimiento Educativo", "cat": "gobierno", "sort_min": 780, "day_idx": 4}, {"dia": "Martes 15 de Septiembre", "hora": "13:30-14:30 hrs.", "zona": "Centro Historico", "responsable": "OSEM", "staff": "OSEM", "actividad": "Montaje mobiliario OSEM /Metamorfeame", "cat": "otros", "sort_min": 810, "day_idx": 4}, {"dia": "Martes 15 de Septiembre", "hora": "14:00 hrs.", "zona": "Alameda", "responsable": "GOBIERNO", "staff": "GOBIERNO", "actividad": "Participacion Escuela de Bellas Artes Toluca", "cat": "gobierno", "sort_min": 840, "day_idx": 4}, {"dia": "Martes 15 de Septiembre", "hora": "14:30-15:30 hrs.", "zona": "Centro Historico", "responsable": "OSEM", "staff": "OSEM", "actividad": "Line Check OSEM", "cat": "otros", "sort_min": 870, "day_idx": 4}, {"dia": "Martes 15 de Septiembre", "hora": "15:00 hrs.", "zona": "Centro Historico", "responsable": "ACS (Asminda)", "staff": "ACS", "actividad": "Sound Check Aarón y su grupo Ilusión", "cat": "acs", "sort_min": 900, "day_idx": 4}, {"dia": "Martes 15 de Septiembre", "hora": "16:00 hrs,", "zona": "Centro Historico", "responsable": "ACS (Asminda)", "staff": "ACS", "actividad": "Re Load In Germán Montero (Llegada de Staff)", "cat": "acs", "sort_min": 960, "day_idx": 4}, {"dia": "Martes 15 de Septiembre", "hora": "17:00 hrs.", "zona": "Centro Historico", "responsable": "GRUPO ROA +ACS (Asminda)", "staff": "GRUPO ROA +ACS", "actividad": "Line Check, se queda montado y listo", "cat": "mixto", "sort_min": 1020, "day_idx": 4}, {"dia": "Martes 15 de Septiembre", "hora": "17:30 hrs.", "zona": "Centro Historico", "responsable": "GOBIERNO", "staff": "GOBIERNO", "actividad": "Acceso a Publico", "cat": "gobierno", "sort_min": 1050, "day_idx": 4}, {"dia": "Martes 15 de Septiembre", "hora": "17:30 hrs.", "zona": "Av. Independencia, Calle Riva Palacio, Calle Nicolas Bravo, Av. Lerdo", "responsable": "GOBIERNO", "staff": "GOBIERNO", "actividad": "Ingreso de Asistentes a la Plaza de los Martires", "cat": "gobierno", "sort_min": 1050, "day_idx": 4}, {"dia": "Martes 15 de Septiembre", "hora": "17:35-17:50 hrs.", "zona": "Centro Historico", "responsable": "OSEM", "staff": "OSEM", "actividad": "Acceso músicos y staff OSEM", "cat": "otros", "sort_min": 1055, "day_idx": 4}, {"dia": "Martes 15 de Septiembre", "hora": "17:40 hrs.", "zona": "Centro Historico", "responsable": "GOBIERNO", "staff": "GOBIERNO", "actividad": "Participacion de Luca Orozco (cantante)", "cat": "gobierno", "sort_min": 1060, "day_idx": 4}, {"dia": "Martes 15 de Septiembre", "hora": "17:58-17:59 hrs.", "zona": "Centro Historico", "responsable": "OSEM", "staff": "OSEM", "actividad": "Entra Concertino / Entra director / Inicia", "cat": "otros", "sort_min": 1078, "day_idx": 4}, {"dia": "Martes 15 de Septiembre", "hora": "18:00-19:15 hrs.", "zona": "Centro Historico", "responsable": "OSEM", "staff": "OSEM", "actividad": "Concierto", "cat": "otros", "sort_min": 1080, "day_idx": 4}, {"dia": "Martes 15 de Septiembre", "hora": "18:00 hrs.", "zona": "Centro Historico", "responsable": "GOBIERNO", "staff": "GOBIERNO", "actividad": "Orquesta Sinfonica del Estado de Mexico (Tributo a Caifanes)", "cat": "gobierno", "sort_min": 1080, "day_idx": 4}, {"dia": "Martes 15 de Septiembre", "hora": "19:15-19:25 hrs.", "zona": "Centro Historico", "responsable": "OSEM", "staff": "OSEM", "actividad": "Salida de músicos y staff", "cat": "otros", "sort_min": 1155, "day_idx": 4}, {"dia": "Martes 15 de Septiembre", "hora": "19:15-19:30 hrs.", "zona": "Centro Historico", "responsable": "OSEM", "staff": "OSEM", "actividad": "Desmontaje del mobiliario musical OSEM/ (Dentro del escenario)", "cat": "otros", "sort_min": 1155, "day_idx": 4}, {"dia": "Martes 15 de Septiembre", "hora": "19:30 hrs.", "zona": "Centro Historico", "responsable": "ACS (Asminda)", "staff": "ACS", "actividad": "Show Time German Montero", "cat": "acs", "sort_min": 1170, "day_idx": 4}, {"dia": "Martes 15 de Septiembre", "hora": "19:30-20:30 hrs.", "zona": "Centro Historico", "responsable": "OSEM", "staff": "OSEM", "actividad": "Carga de mudanza", "cat": "otros", "sort_min": 1170, "day_idx": 4}, {"dia": "Martes 15 de Septiembre", "hora": "20:30-20:31 hrs.", "zona": "Centro Historico", "responsable": "OSEM", "staff": "OSEM", "actividad": "Salida camión mudanza OSEM", "cat": "otros", "sort_min": 1230, "day_idx": 4}, {"dia": "Martes 15 de Septiembre", "hora": "21:15 hrs.", "zona": "Centro Historico", "responsable": "ACS (Asminda)", "staff": "ACS", "actividad": "Cambio de Set a Aarón (Sacar backline Germán M)", "cat": "acs", "sort_min": 1275, "day_idx": 4}, {"dia": "Martes 15 de Septiembre", "hora": "21:30 hrs.", "zona": "Centro Historico", "responsable": "ACS (Asminda)", "staff": "ACS", "actividad": "Show Time Aarón y su grupo ilusion", "cat": "acs", "sort_min": 1290, "day_idx": 4}, {"dia": "Martes 15 de Septiembre", "hora": "22:50 hrs.", "zona": "Centro Historico", "responsable": "ACS (Asminda)", "staff": "ACS", "actividad": "Cambio de Set para preparacion de Maria Jose", "cat": "acs", "sort_min": 1370, "day_idx": 4}, {"dia": "Martes 15 de Septiembre", "hora": "22:55 hrs.", "zona": "Centro Historico", "responsable": "GOBIERNO", "staff": "GOBIERNO", "actividad": "Preparacion para Inicio de la Ceremonia del Grito", "cat": "gobierno", "sort_min": 1375, "day_idx": 4}, {"dia": "Martes 15 de Septiembre", "hora": "23:00 hrs.", "zona": "Centro Historico", "responsable": "GOBIERNO", "staff": "GOBIERNO", "actividad": "Ceremonia del Grito de Independencia", "cat": "gobierno", "sort_min": 1380, "day_idx": 4}, {"dia": "Martes 15 de Septiembre", "hora": "23:06 hrs.", "zona": "Centro Historico", "responsable": "GOBIERNO", "staff": "GOBIERNO", "actividad": "Show de drones y fuegos artificiales", "cat": "gobierno", "sort_min": 1386, "day_idx": 4}, {"dia": "Martes 15 de Septiembre", "hora": "23:15 hrs.", "zona": "Centro Historico", "responsable": "ACS (Asminda)", "staff": "ACS", "actividad": "Show Time Maria Jose", "cat": "acs", "sort_min": 1395, "day_idx": 4}, {"dia": "Martes 15 de Septiembre", "hora": "17:00-17:30hrs", "zona": "Centro Historico", "responsable": "OSEM", "staff": "OSEM", "actividad": "Sound Check OSEM", "cat": "otros", "sort_min": 9999, "day_idx": 4}, {"dia": "Miercoles 16 de Septiembre", "hora": "00:45 hrs.", "zona": "Centro Historico", "responsable": "GRUPO ROA", "staff": "STAFF GRUPO ROA", "actividad": "Inicia desmontaje Grupo ROA", "cat": "roa", "sort_min": 45, "day_idx": 5}, {"dia": "Miercoles 16 de Septiembre", "hora": "3:00 hrs.", "zona": "Centro Historico", "responsable": "ACS (Asminda)", "staff": "ACS", "actividad": "Inicia desmontaje Top Truss Soporte", "cat": "acs", "sort_min": 180, "day_idx": 5}, {"dia": "Miercoles 16 de Septiembre", "hora": "5:30 hrs.", "zona": "Centro Historico", "responsable": "GRUPO ROA", "staff": "STAFF GRUPO ROA", "actividad": "Entrega del Support", "cat": "roa", "sort_min": 330, "day_idx": 5}, {"dia": "Miercoles 16 de Septiembre", "hora": "6:00 hrs.", "zona": "Centro Historico", "responsable": "", "staff": "TODO", "actividad": "Cierre Logistico", "cat": "otros", "sort_min": 360, "day_idx": 5}, {"dia": "Miercoles 16 de Septiembre", "hora": "8:00 hrs.", "zona": "Centro Historico", "responsable": "GOBIERNO", "staff": "GOBIERNO", "actividad": "Ceremonia Guardia Solemne de Honor al pie de la figura de Don Miguel Hidalgo y Costilla (Escuela Secundaria No. 01)", "cat": "gobierno", "sort_min": 480, "day_idx": 5}, {"dia": "Miercoles 16 de Septiembre", "hora": "8:50 hrs.", "zona": "Centro Historico", "responsable": "GOBIERNO", "staff": "GOBIERNO", "actividad": "Honores a la Bandera", "cat": "gobierno", "sort_min": 530, "day_idx": 5}, {"dia": "Miercoles 16 de Septiembre", "hora": "9:00 hrs.", "zona": "Centro Historico", "responsable": "GOBIERNO", "staff": "GOBIERNO", "actividad": "Inicio del Desfile 216 Aniversario", "cat": "gobierno", "sort_min": 540, "day_idx": 5}, {"dia": "Miercoles 16 de Septiembre", "hora": "10:30 hrs.", "zona": "Centro Historico", "responsable": "", "staff": "", "actividad": "Termino del Evento", "cat": "otros", "sort_min": 630, "day_idx": 5}];
+
+var CATS = {
+  roa:      { label: 'Grupo ROA',        color: '#c17a3d' },
+  gobierno: { label: 'Gobierno',         color: '#2f7d4f' },
+  acs:      { label: 'ACS (Asminda)',    color: '#a83246' },
+  mixto:    { label: 'Grupo ROA + ACS',  color: '#7a5ea8' },
+  otros:    { label: 'Otros proveedores',color: '#4d7ea8' }
+};
+
+var legendBox = document.getElementById('legendBox');
+var catKeys = Object.keys(CATS);
+for (var ci = 0; ci < catKeys.length; ci++){
+  var c = CATS[catKeys[ci]];
+  var elLegend = document.createElement('div');
+  elLegend.className = 'legend-item';
+  elLegend.innerHTML = '<span class="dot" style="background:' + c.color + '"></span>' + c.label;
+  legendBox.appendChild(elLegend);
+}
+
+var days = [];
+for (var di = 0; di < TIMELINE_DATA.length; di++){
+  var dday = TIMELINE_DATA[di].dia;
+  if (days.indexOf(dday) === -1) days.push(dday);
+}
+
+var dayNavBox = document.getElementById('dayNavBox');
+var mainBox = document.getElementById('mainBox');
+
+function shortDay(d){
+  var parts = d.replace('Miercoles','Miércoles').split(' ');
+  var dow = parts[0].slice(0,3).toUpperCase();
+  var num = parts[1];
+  return {dow: dow, num: num};
+}
+
+function selectDay(idx){
+  var tabs = document.querySelectorAll('.day-tab');
+  for (var i = 0; i < tabs.length; i++){
+    tabs[i].classList.toggle('active', Number(tabs[i].dataset.idx) === idx);
+  }
+  var panels = document.querySelectorAll('.day-panel');
+  for (var j = 0; j < panels.length; j++){
+    panels[j].classList.toggle('active', Number(panels[j].dataset.idx) === idx);
+  }
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+for (var dIdx = 0; dIdx < days.length; dIdx++){
+  (function(day, idx){
+    var tab = document.createElement('div');
+    tab.className = 'day-tab' + (idx===0 ? ' active' : '');
+    var sd = shortDay(day);
+    tab.innerHTML = '<span class="n">' + sd.dow + '</span>' + sd.num + ' SEP';
+    tab.dataset.idx = idx;
+    tab.addEventListener('click', function(){ selectDay(idx); });
+    dayNavBox.appendChild(tab);
+
+    var panel = document.createElement('section');
+    panel.className = 'day-panel' + (idx===0 ? ' active' : '');
+    panel.dataset.idx = idx;
+
+    var items = [];
+    for (var k = 0; k < TIMELINE_DATA.length; k++){
+      if (TIMELINE_DATA[k].dia === day) items.push(TIMELINE_DATA[k]);
+    }
+
+    var heading = document.createElement('div');
+    heading.className = 'day-heading';
+    heading.innerHTML = '<h2>' + day + '</h2><span class="count sans">' + items.length + ' actividades</span>';
+    panel.appendChild(heading);
+
+    var tl = document.createElement('div');
+    tl.className = 'timeline';
+
+    for (var m = 0; m < items.length; m++){
+      var d = items[m];
+      var cat = CATS[d.cat] ? d.cat : 'otros';
+      var row = document.createElement('div');
+      row.className = 'item cat-' + cat;
+      row.innerHTML =
+        '<div class="time sans">' + d.hora + '</div>' +
+        '<div class="node"></div>' +
+        '<div class="card">' +
+          '<span class="badge sans">' + CATS[cat].label + '</span>' +
+          '<p class="activity">' + d.actividad + '</p>' +
+          '<div class="meta">' + (d.zona ? '<b>Zona:</b> '+d.zona+' &nbsp;·&nbsp; ' : '') + '<b>Responsable:</b> ' + (d.responsable || '—') + (d.staff ? ' &nbsp;·&nbsp; <b>Staff:</b> '+d.staff : '') + '</div>' +
+        '</div>';
+      tl.appendChild(row);
+    }
+
+    panel.appendChild(tl);
+    mainBox.appendChild(panel);
+  })(days[dIdx], dIdx);
+}
+})();
+</script>
+</body>
+</html>
